@@ -38,7 +38,7 @@
                   <label class="form-label" for="form3Example4cdg">celular</label>
                 </div>              
 
-                  <div action="SvContacto" method="GET">
+                  <div action="" method="GET">
                 <div class="d-flex justify-content-center"  >
                     <button type="button" 
                     class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Agregar</button>
