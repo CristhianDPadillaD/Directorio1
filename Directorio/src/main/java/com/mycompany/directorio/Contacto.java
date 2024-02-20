@@ -106,7 +106,28 @@ public class Contacto  implements Comparable<Contacto>{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
-//public void insertar    
+      public void insertar( Contacto nuevo ) 
+    {
+      
+
+        if( compareTo( nuevo ) > 0 )
+        {
+            // Debe agregar el nuevo contacto por el sub�rbol izquierdo
+            if( izq == null )
+                izq = nuevo;
+            else
+                izq.insertar( nuevo );
+        }
+        else
+        {
+            // Debe agregar el nuevo contacto por el sub�rbol derecho
+            if( der == null )
+                der = nuevo;
+            else
+                der.insertar( nuevo );
+        }
+    }
+
     
     
     
