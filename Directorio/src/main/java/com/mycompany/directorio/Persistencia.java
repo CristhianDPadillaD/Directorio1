@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import javax.servlet.ServletContext;
 
 /**
@@ -21,10 +22,25 @@ import javax.servlet.ServletContext;
  */
 public class Persistencia {
     
+    
+    
+    public static void escribirArchivo(ServletContext contexto, Directorio contactico)throws FileNotFoundException{
+        File archivo = new File ("Reporte.txt");
+        PrintWriter pluma = new PrintWriter (archivo);
+            
+            pluma.println(contactico);
+        }
+        
+        
+    public static void leerArchivo (ServletContext context) throws FileNotFoundException{
+        File archivo = new File ("Reporte.txt");
+        
+        
+    }
   
   
     public static void escribirContacto(ServletContext contexto, Directorio contactico) {
-         String path= contexto.getRealPath("data.txt");
+         String path= contexto.getRealPath("archivito.txt");
          File arc= new File (path);
         try {
            
@@ -43,7 +59,7 @@ public class Persistencia {
         
       Directorio contactico = new Directorio();
       
-        String p="data.txt";
+        String p="archivito.txt";
         String path= contexto.getRealPath(p);
         File arc= new File (path);
         System.out.println("El archivo serializado se encuentra en: "+path);

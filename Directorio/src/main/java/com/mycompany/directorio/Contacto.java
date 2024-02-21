@@ -4,11 +4,13 @@
  */
 package com.mycompany.directorio;
 
+import java.io.Serializable;
+
 /**
  *
  * @author ADMIN
  */
-public class Contacto  implements Comparable<Contacto>{
+public class Contacto  implements Comparable<Contacto>, Serializable{
     
     private int id; 
     
@@ -25,6 +27,13 @@ public class Contacto  implements Comparable<Contacto>{
     private Contacto izq;
     
     private Contacto der;
+
+    
+    //Constructor vacio
+    public Contacto() {
+    }
+    
+    
 
     public Contacto(int id, String nombre, String apellido, String correo, String direccion, String telefono, Contacto izq, Contacto der) {
         this.id = id;

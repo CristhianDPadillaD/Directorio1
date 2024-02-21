@@ -36,16 +36,6 @@ public class SvAgregar extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {  
         
-        String nombre = request.getParameter("nombre");
-        String apellido = request.getParameter("apellido");
-        String correo = request.getParameter("correo");
-        String direccion = request.getParameter("direccion");
-        String celular = request.getParameter("celular");
-        
-        agregarDirect = Persistencia.cargarContacto(request.getServletContext());
-        
-        agregarDirect.agregarContacto(identificador, nombre, apellido, correo, direccion, celular, null, null);
-       
         
         
         
@@ -57,6 +47,19 @@ public class SvAgregar extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        String nombre = request.getParameter("nombre");
+        String apellido = request.getParameter("apellido");
+        String correo = request.getParameter("correo");
+        String direccion = request.getParameter("direccion");
+        String celular = request.getParameter("celular");
+        
+        agregarDirect = Persistencia.cargarContacto(request.getServletContext());
+        
+        agregarDirect.agregarContacto(identificador, nombre, apellido, correo, direccion, celular);
+        
+        Persistencia.escribirContacto(request.getServletContext(), agregarDirect);
+       
         processRequest(request, response);
     }
 
