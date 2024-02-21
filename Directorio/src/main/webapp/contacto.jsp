@@ -1,52 +1,73 @@
 <link rel="stylesheet" href="template/Contacto.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<section class="vh-100 bg-image"
-  style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
-  <div class="mask d-flex align-items-center h-100 gradient-custom-3">
-    <div class="container h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-          <div class="card" style="border-radius: 15px;">
-            <div class="card-body p-5">
-              <h2 class="text-uppercase text-center mb-5">Agregar un contacto</h2>
+<section class="vh-100" style="background-color: #eee;">
+  <div class="container h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-lg-12 col-xl-11">
+        <div class="card text-black" style="border-radius: 25px;">
+          <div class="card-body p-md-5">
+            <div class="row justify-content-center">
+              <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
-              <form action="SvAgregar" method="GET" >
+                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
 
-                <div class="form-outline mb-4">
-                  <input type="text" id="form3Example1cg" class="form-control form-control-lg" name="nombre" required/>
-                  <label class="form-label" for="form3Example1cg">nombre</label>
-                </div>
+                <form class="mx-1 mx-md-4">
 
-                <div class="form-outline mb-4">
-                  <input type="email" id="form3Example3cg" class="form-control form-control-lg" name="apellido" required />
-                  <label class="form-label" for="form3Example3cg">apellido</label>
-                </div>
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input type="text" id="form3Example1c" class="form-control" />
+                      <label class="form-label" for="form3Example1c">Nombre</label>
+                    </div>
+                  </div>
 
-                <div class="form-outline mb-4">
-                  <input type="password" id="form3Example4cg" class="form-control form-control-lg" name="correo" required/>
-                  <label class="form-label" for="form3Example4cg">correo</label>
-                </div>
+                     <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input type="text" id="form3Example1c" class="form-control" />
+                      <label class="form-label" for="form3Example1c">Apellido</label>
+                    </div>
+                  </div>
+                    
+                       <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input type="text" id="form3Example1c" class="form-control" />
+                      <label class="form-label" for="form3Example1c">Direccion</label>
+                    </div>
+                  </div>
+                    
+                       <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input type="text" id="form3Example1c" class="form-control" />
+                      <label class="form-label" for="form3Example1c">Telefono</label>
+                    </div>
+                  </div>
+                    
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input type="email" id="form3Example3c" class="form-control" />
+                      <label class="form-label" for="form3Example3c">Correo</label>
+                    </div>
+                  </div>
 
-                <div class="form-outline mb-4">
-                  <input type="password" id="form3Example4cdg" class="form-control form-control-lg" name=" direccion" required/>
-                  <label class="form-label" for="form3Example4cdg">direccion</label>
-                </div>
-                  
-                <div class="form-outline mb-4">
-                  <input type="number" id="form3Example4cdg" class="form-control form-control-lg" name="celular" required />
-                  <label class="form-label" for="form3Example4cdg">celular</label>
-                </div>              
+                  <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                    <button type="button" class="btn btn-primary btn-lg">Registrar</button>
+                  </div>
 
-                  <div >
-                <div class="d-flex justify-content-center"  >
-                    <button type="submit"class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Agregar</button>
-                </div>
-                      
-           
+                </form>
+
+              </div>
+              <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
+                  class="img-fluid" alt="Sample image">
+
+              </div>
             </div>
-              </form>    
-                  
           </div>
         </div>
       </div>
