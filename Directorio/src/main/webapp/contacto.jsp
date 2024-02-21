@@ -14,27 +14,27 @@
               <form action="SvAgregar" method="GET" >
 
                 <div class="form-outline mb-4">
-                  <input type="text" id="form3Example1cg" class="form-control form-control-lg" />
+                  <input type="text" id="form3Example1cg" class="form-control form-control-lg" name="nombre" required/>
                   <label class="form-label" for="form3Example1cg">nombre</label>
                 </div>
 
                 <div class="form-outline mb-4">
-                  <input type="email" id="form3Example3cg" class="form-control form-control-lg" />
+                  <input type="email" id="form3Example3cg" class="form-control form-control-lg" name="apellido" required />
                   <label class="form-label" for="form3Example3cg">apellido</label>
                 </div>
 
                 <div class="form-outline mb-4">
-                  <input type="password" id="form3Example4cg" class="form-control form-control-lg" />
+                  <input type="password" id="form3Example4cg" class="form-control form-control-lg" name="correo" required/>
                   <label class="form-label" for="form3Example4cg">correo</label>
                 </div>
 
                 <div class="form-outline mb-4">
-                  <input type="password" id="form3Example4cdg" class="form-control form-control-lg" />
+                  <input type="password" id="form3Example4cdg" class="form-control form-control-lg" name=" direccion" required/>
                   <label class="form-label" for="form3Example4cdg">direccion</label>
                 </div>
                   
                 <div class="form-outline mb-4">
-                  <input type="password" id="form3Example4cdg" class="form-control form-control-lg" />
+                  <input type="number" id="form3Example4cdg" class="form-control form-control-lg" name="celular" required />
                   <label class="form-label" for="form3Example4cdg">celular</label>
                 </div>              
 

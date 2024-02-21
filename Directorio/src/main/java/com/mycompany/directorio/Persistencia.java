@@ -21,7 +21,7 @@ import javax.servlet.ServletContext;
  */
 public class Persistencia {
     
-    ArrayList <Contacto> contactico = new ArrayList<>();
+   static  ArrayList <Contacto> contactico = new ArrayList<>();
   
     public static void escribirContacto(ServletContext contexto, ArrayList<Contacto> contactico) {
          String path= contexto.getRealPath("data.txt");
@@ -41,7 +41,7 @@ public class Persistencia {
     
      public static ArrayList<Contacto> cargarContacto(ServletContext contexto) {
         
-        ArrayList<Contacto> contactico = new ArrayList<>();
+     
         String p="data.txt";
         String path= contexto.getRealPath(p);
         File arc= new File (path);
