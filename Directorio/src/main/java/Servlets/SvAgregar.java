@@ -4,7 +4,9 @@
  */
 package Servlets;
 
+import com.mycompany.directorio.Contacto;
 import com.mycompany.directorio.Directorio;
+import com.mycompany.directorio.Persistencia;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -32,13 +34,21 @@ public class SvAgregar extends HttpServlet {
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String titulo = request.getParameter("nombre").trim();
-        String apellido = request.getParameter("apellido").trim();
-        String correo = request.getParameter("correo").trim();
-        String direccion = request.getParameter("direccion").trim();
-        String celular = request.getParameter("celular").trim();
-
+            throws ServletException, IOException {  
+        
+        String nombre = request.getParameter("nombre");
+        String apellido = request.getParameter("apellido");
+        String correo = request.getParameter("correo");
+        String direccion = request.getParameter("direccion");
+        String celular = request.getParameter("celular");
+        
+        agregarDirect = Persistencia.cargarContacto(request.getServletContext());
+        
+        agregarDirect.agregarContacto(identificador, nombre, apellido, correo, direccion, celular, null, null);
+       
+        
+        
+        
         
         processRequest(request, response);
     }

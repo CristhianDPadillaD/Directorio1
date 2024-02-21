@@ -12,12 +12,12 @@
 
                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
 
-                <form class="mx-1 mx-md-4">
+                <form action="SvAgregar" method="GET"class="mx-1 mx-md-4">
 
                   <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
-                      <input type="text" id="form3Example1c" class="form-control" />
+                        <input type="text" id="form3Example1c" class="form-control" required name="nombre" />
                       <label class="form-label" for="form3Example1c">Nombre</label>
                     </div>
                   </div>
@@ -25,7 +25,7 @@
                      <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
-                      <input type="text" id="form3Example1c" class="form-control" />
+                      <input type="text" id="form3Example1c" class="form-control"required name="apellido" />
                       <label class="form-label" for="form3Example1c">Apellido</label>
                     </div>
                   </div>
@@ -33,7 +33,7 @@
                        <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
-                      <input type="text" id="form3Example1c" class="form-control" />
+                      <input type="text" id="form3Example1c" class="form-control" required name="direccion"/>
                       <label class="form-label" for="form3Example1c">Direccion</label>
                     </div>
                   </div>
@@ -41,7 +41,7 @@
                        <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
-                      <input type="text" id="form3Example1c" class="form-control" />
+                      <input type="number" id="form3Example1c" class="form-control"required  name="telefono"/>
                       <label class="form-label" for="form3Example1c">Telefono</label>
                     </div>
                   </div>
@@ -49,13 +49,13 @@
                   <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
-                      <input type="email" id="form3Example3c" class="form-control" />
+                      <input type="email" id="form3Example3c" class="form-control"required name="correo"/>
                       <label class="form-label" for="form3Example3c">Correo</label>
                     </div>
                   </div>
 
                   <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                    <button type="button" class="btn btn-primary btn-lg">Registrar</button>
+                    <button type="submit" class="btn btn-primary btn-lg">Registrar</button>
                   </div>
 
                 </form>

@@ -21,9 +21,9 @@ import javax.servlet.ServletContext;
  */
 public class Persistencia {
     
-   static  ArrayList <Contacto> contactico = new ArrayList<>();
   
-    public static void escribirContacto(ServletContext contexto, ArrayList<Contacto> contactico) {
+  
+    public static void escribirContacto(ServletContext contexto, Directorio contactico) {
          String path= contexto.getRealPath("data.txt");
          File arc= new File (path);
         try {
@@ -39,9 +39,10 @@ public class Persistencia {
         }
     }
     
-     public static ArrayList<Contacto> cargarContacto(ServletContext contexto) {
+     public static Directorio cargarContacto(ServletContext contexto) {
         
-     
+      Directorio contactico = new Directorio();
+      
         String p="data.txt";
         String path= contexto.getRealPath(p);
         File arc= new File (path);
@@ -51,7 +52,7 @@ public class Persistencia {
                ObjectInputStream ois=new ObjectInputStream(fileIn);
              
             
-             contactico = (ArrayList<Contacto>) ois.readObject();
+            contactico = (Directorio) ois.readObject();
              ois.close();
              System.out.println("Se leyo -----");
              System.out.println("buscando en: " + path);

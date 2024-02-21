@@ -15,8 +15,8 @@ public class Directorio {
     public Directorio(){
         contactoRaiz= null;
 }
-    public void agregarContacto (int id, String nombre, String apellido, String correo, String direccion, String telefono, Contacto izq, Contacto der ){
-                Contacto c = new Contacto(id, nombre, apellido, correo, direccion, telefono, izq, der);
+    public void agregarContacto (int id, String nombre, String apellido, String correo, String direccion, String telefono ){
+                Contacto c = new Contacto(id, nombre, apellido, correo, direccion, telefono);
         if( contactoRaiz == null )
             contactoRaiz = c;
         else
