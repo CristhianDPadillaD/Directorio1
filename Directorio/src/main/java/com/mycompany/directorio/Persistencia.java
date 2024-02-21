@@ -6,10 +6,12 @@ package com.mycompany.directorio;
 
 import java.util.ArrayList;
 import com.mycompany.directorio.Contacto;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -32,11 +34,30 @@ public class Persistencia {
         }
         
         
-    public static void leerArchivo (ServletContext context) throws FileNotFoundException{
-        File archivo = new File ("Reporte.txt");
+    public static void leerArchivo (ServletContext context, Directorio contactico) throws FileNotFoundException, IOException{
+         File archivo = new File("Reporte.txt");
+
+        if (!archivo.exists()) {
+            System.out.println("El archivo no existe.");
+            return;
+        }
+
+        try (BufferedReader lector = new BufferedReader(new FileReader(archivo))) {
+            String linea;
+            while ((linea = lector.readLine()) != null) {               
+                System.out.println(linea);
+            }
+       
+        }
+}
+       
+
+        
+                
         
         
-    }
+        
+    
   
   
     public static void escribirContacto(ServletContext contexto, Directorio contactico) {
