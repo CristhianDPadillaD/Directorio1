@@ -30,8 +30,7 @@ public class Directorio implements Serializable{
         contactoRaiz= null;
 }
     public void agregarContacto (int id, String nombre, String apellido, String correo, String direccion, String telefono ){
-     id +=1;
-     
+    
                 Contacto c = new Contacto(id, nombre, apellido, correo, direccion, telefono, null, null);  
                 
                 

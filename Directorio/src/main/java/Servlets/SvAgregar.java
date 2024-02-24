@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 public class SvAgregar extends HttpServlet {
     
     Directorio agregarDirect = new Directorio();
-    int identificador;
+    int identificador = 1;
   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -57,6 +57,7 @@ public class SvAgregar extends HttpServlet {
         agregarDirect=Directorio.cargarContacto(request.getServletContext());
         
         agregarDirect.agregarContacto(identificador , nombre, apellido, correo, direccion, celular);
+        identificador++;
         
         Directorio.escribirContacto(request.getServletContext(), agregarDirect);
        
