@@ -112,7 +112,8 @@ public class Contacto  implements Comparable<Contacto>, Serializable{
 
     @Override
     public int compareTo(Contacto o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+     // Comparar los nombres de los contactos
+    return this.nombre.compareTo(o.nombre);
     }
     
       public void insertar( Contacto nuevo ) 

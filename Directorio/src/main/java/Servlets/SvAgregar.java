@@ -6,7 +6,7 @@ package Servlets;
 
 import com.mycompany.directorio.Contacto;
 import com.mycompany.directorio.Directorio;
-import com.mycompany.directorio.Persistencia;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -54,13 +54,13 @@ public class SvAgregar extends HttpServlet {
         String direccion = request.getParameter("direccion");
         String celular = request.getParameter("celular");
         
-        agregarDirect = Persistencia.cargarContacto(request.getServletContext());
+        agregarDirect=Directorio.cargarContacto(request.getServletContext());
         
-        agregarDirect.agregarContacto(identificador, nombre, apellido, correo, direccion, celular);
+        agregarDirect.agregarContacto(identificador , nombre, apellido, correo, direccion, celular);
         
-        Persistencia.escribirContacto(request.getServletContext(), agregarDirect);
+        Directorio.escribirContacto(request.getServletContext(), agregarDirect);
        
-        processRequest(request, response);
+         response.sendRedirect("index.jsp");
     }
 
     
