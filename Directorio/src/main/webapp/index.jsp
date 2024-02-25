@@ -4,9 +4,17 @@
 
 <%
     Directorio tabla = new Directorio ();
+    
     ServletContext context = getServletContext();
+    String terminoBusqueda = request.getParameter("buscar");
     tabla = Directorio.cargarContacto(context);
-    String tablaHtml = Directorio.listarContactos(context, request);
+    
+
+
+    boolean contactoEncontrado = tabla.verificarExistencia(terminoBusqueda, request);
+    boolean contactosExiste = tabla.verificar();
+    String tablaHtml = Directorio.listarContactos(context, request, terminoBusqueda);
+  
     %>
 
 
@@ -45,7 +53,7 @@
                     <!-- Post preview-->
                     <div class="post-preview">
                         <a href="contacto.jsp">
-                            <h2 class="post-title">¿Aun no has agregado un contacto?</h2>
+                            <h2 class="post-title">¿Aún no has agregado un contacto?</h2>
                             <h3 class="post-subtitle">Seleccione aqui para agregar</h3>
                         </a>
                    
@@ -64,7 +72,22 @@
                                 </tr>
                             </thead>
                             <tbody>
+                               <% if (!contactosExiste) { %>
                                
+                             <tr>
+                            <td colspan='6' align='center' valign='middle'>No se han registrado Contactos</td>
+                             </tr>
+                               
+                                <%   
+                                    }else if (contactoEncontrado){ 
+                                %>
+
+                        <tr>
+                            <td colspan='6' align='center' valign='middle'>No existe el contacto</td>
+                            </tr>
+
+                            <% }
+                                    %>
                                 <%=tablaHtml%>
                             </tbody>
                         </table>
@@ -79,8 +102,8 @@
                         </a>
                         <nav class="navbar bg-body-tertiary">
                             <div class="container-fluid">
-                                <form class="d-flex" role="search">
-                                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                                <form action="SvBuscar" method="Get" class="d-flex" role="search">
+                                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="contact">
                                     <button class="btn btn-outline-success" type="submit">Search</button>
                                 </form>
                             </div>

@@ -3,4 +3,5 @@ com\mycompany\directorio\Contacto.class
 com\mycompany\directorio\resources\JakartaEE8Resource.class
 com\mycompany\directorio\Directorio.class
 com\mycompany\directorio\JakartaRestConfiguration.class
+Servlets\SvBuscar.class
 Servlets\SvContacto.class

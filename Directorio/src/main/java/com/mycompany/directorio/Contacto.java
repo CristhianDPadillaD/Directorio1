@@ -139,6 +139,15 @@ public class Contacto  implements Comparable<Contacto>, Serializable{
     }
 
     
+         public Contacto buscar( String unNombre )
+    {
+        if( nombre.compareToIgnoreCase( unNombre ) == 0 )
+            return this;
+        else if( nombre.compareToIgnoreCase( unNombre ) > 0 )
+            return ( izq == null ) ? null : izq.buscar( unNombre );
+        else
+            return ( der == null ) ? null : der.buscar( unNombre );
+    }
     
     
    

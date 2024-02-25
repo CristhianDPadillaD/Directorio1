@@ -19,16 +19,27 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author cuati
  */
+
+
 public class Directorio implements Serializable{
     ArrayList <Contacto> misContactos = new ArrayList <>(); 
     
     private Contacto contactoRaiz;
  
-    Contacto iContacto = null;
+    
     
     public Directorio(){
         contactoRaiz= null;
 }
+    /**
+     * 
+     * @param id
+     * @param nombre
+     * @param apellido
+     * @param correo
+     * @param direccion
+     * @param telefono 
+     */
     public void agregarContacto (int id, String nombre, String apellido, String correo, String direccion, String telefono ){
     
                 Contacto c = new Contacto(id, nombre, apellido, correo, direccion, telefono, null, null);  
@@ -41,9 +52,18 @@ public class Directorio implements Serializable{
         
     }
     
+    public boolean verificar (){
+        return contactoRaiz !=null;
+        
+    }
+    
     //insertar, buscar, listar, eliminar
     
-
+/**
+ * 
+ * @param contexto
+ * @param contactico 
+ */
     public static void escribirContacto(ServletContext contexto, Directorio contactico) {
          String path= contexto.getRealPath("archivito.txt");
          File arc= new File (path);
@@ -61,8 +81,12 @@ public class Directorio implements Serializable{
     }
     
     
-    
-     public static Directorio cargarContacto(ServletContext contexto) {
+    /**
+     * 
+     * @param contexto
+     * @return 
+     */
+     public static Directorio cargarContacto(ServletContext contexto)throws FileNotFoundException, IOException  {
         
       Directorio contactico = new Directorio();
       
@@ -96,7 +120,7 @@ public class Directorio implements Serializable{
      
      
      
-          public static String listarContactos (ServletContext context, HttpServletRequest request) throws IOException, ClassNotFoundException{
+          public static String listarContactos (ServletContext context, HttpServletRequest request, String terminoBusqueda) throws IOException, ClassNotFoundException{
            //Llenamos la lista con la informacion del archivo
            Directorio listaContactos = cargarContacto(context);
            //En caso de estar vacia se crea una
@@ -105,16 +129,20 @@ public class Directorio implements Serializable{
             }
            String tabla="";//Variable que contiene la tabla
 
-//           if (terminoBusqueda==null){
+           if (terminoBusqueda==null){
                tabla=listaContactos.generarTabla(listaContactos.contactoRaiz);
-//           }else if (!terminoBusqueda.isEmpty() ){
-//               tabla = listaLibro.tablaBusqueda(terminoBusqueda, request);
-           //}
+           }else if (!terminoBusqueda.isEmpty() ){
+               tabla = listaContactos.generarTablaBusqueda(listaContactos.contactoRaiz, terminoBusqueda);
+           }
                
 
                return tabla;
     }
-          
+          /**
+           * 
+           * @param raiz
+           * @return 
+           */
        public String generarTabla(Contacto raiz) {
     StringBuilder tablaHTML = new StringBuilder();
     generarTablaRecursivo(raiz, tablaHTML);
@@ -131,7 +159,6 @@ private void generarTablaRecursivo(Contacto actual, StringBuilder tablaHTML) {
         tablaHTML.append("<td>").append(actual.getId()).append("</td>");
         tablaHTML.append("<td>").append(actual.getNombre()).append("</td>");
         tablaHTML.append("<td><a href=\"#\" type=\"button\" class=\"btn btn-outline-danger\" data-bs-toggle=\"modal\" data-bs-target=\"#exampleModal\" data-titulo=\"" + actual.getId() + "\"><i class=\"fa-solid fa-eye\"></i></a>");
-        tablaHTML.append("<form action=\"SvPrestamo\" method=\"GET\" ><input type=\"text\" name=\"tiPres\" value=\"" + actual.getId() + "\" hidden><button type=\"submit\" class=\"btn btn-outline-success\"><i class=\"fa-solid fa-cart-shopping\"></i></button></form>");
         tablaHTML.append("<form action=\"SvEliminar\" method=\"GET\" ><input type=\"text\" name=\"inputEliminar\" value=\"" + actual.getId() + "\" hidden><button type=\"submit\" class=\"btn btn-outline-danger\"><i class=\"fa-solid fa-trash\"></i></button></form></td>");
         tablaHTML.append("</tr>");
 
@@ -139,4 +166,57 @@ private void generarTablaRecursivo(Contacto actual, StringBuilder tablaHTML) {
     }
 }
 
+
+       public String generarTablaBusqueda(Contacto raiz, String terminoBusqueda) {
+    StringBuilder tablaHTML = new StringBuilder();
+           generarTablaRecursivaBusqueda(raiz, tablaHTML, terminoBusqueda);
+    return tablaHTML.toString();
+}
+
+private void generarTablaRecursivaBusqueda(Contacto actual, StringBuilder tablaHTML, String terminoBusqueda) {
+    if ( actual!= null) {
+        // Recorrido en orden: primero el hijo izquierdo, luego el nodo actual, y finalmente el hijo derecho
+        generarTablaRecursivaBusqueda(actual.getIzq(), tablaHTML, terminoBusqueda);
+        
+        generarTablaRecursivo(actual.getIzq(), tablaHTML);
+        
+        if (actual.getNombre().equalsIgnoreCase(terminoBusqueda)){
+            // Agregar el nodo actual a la tabla HTML
+        tablaHTML.append("<tr>");
+        tablaHTML.append("<td>").append(actual.getId()).append("</td>");
+        tablaHTML.append("<td>").append(actual.getNombre()).append("</td>");
+        tablaHTML.append("<td><a href=\"#\" type=\"button\" class=\"btn btn-outline-danger\" data-bs-toggle=\"modal\" data-bs-target=\"#exampleModal\" data-titulo=\"" + actual.getId() + "\"><i class=\"fa-solid fa-eye\"></i></a>");
+        tablaHTML.append("<form action=\"SvEliminar\" method=\"GET\" ><input type=\"text\" name=\"inputEliminar\" value=\"" + actual.getId() + "\" hidden><button type=\"submit\" class=\"btn btn-outline-danger\"><i class=\"fa-solid fa-trash\"></i></button></form></td>");
+        tablaHTML.append("</tr>");
+
+            
+        }
+        
+        
+        generarTablaRecursivo(actual.getDer(), tablaHTML);
+    }
+}
+
+
+
+
+/**
+ * 
+ * @param nombre
+ * @return 
+ */
+    public Contacto buscarContacto( String nombre )
+    {
+        return contactoRaiz == null ? null : contactoRaiz.buscar( nombre );
+    }
+
+    
+    public boolean verificarExistencia (String nombre,HttpServletRequest request ){
+        
+          Contacto contactoEncontrado = buscarContacto(nombre);
+            
+        
+        return contactoEncontrado !=null; 
+        
+    }
 }
