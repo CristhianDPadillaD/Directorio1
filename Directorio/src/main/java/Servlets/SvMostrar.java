@@ -51,7 +51,8 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
             "<p>Nombre: " + muestra.getNombre() + "</p>" +
             "<p>Apellido: " + muestra.getApellido() + "</p>" +
             "<p>Direccion: " + muestra.getDireccion() + "</p>" +
-            "<p>Telefono: " + muestra.getTelefono() + "</p>";
+            "<p>Telefono: " + muestra.getTelefono()+ "</p>" +
+            "<p>Correo: " + muestra.getCorreo()+ "</p>";
 
     response.getWriter().write(contactoHtml);
 

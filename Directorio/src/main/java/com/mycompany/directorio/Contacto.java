@@ -138,16 +138,7 @@ public class Contacto  implements Comparable<Contacto>, Serializable{
         }
     }
 
-//    
-//         public Contacto buscar( String unNombre )
-//    {
-//        if( nombre.compareToIgnoreCase( unNombre ) == 0 )
-//            return this;
-//        else if( nombre.compareToIgnoreCase( unNombre ) > 0 )
-//            return ( izq == null ) ? null : izq.buscar( unNombre );
-//        else
-//            return ( der == null ) ? null : der.buscar( unNombre );
-//    }
+
 
           public Contacto buscarIterativo( String unNombre )
     {
@@ -165,5 +156,37 @@ public class Contacto  implements Comparable<Contacto>, Serializable{
         return null;
     }
    
-    
+//      public boolean esHoja( )
+//    {
+//        return izq == null && der == null;
+//    }
+        public Contacto darMenor( )
+    {
+        return ( izq == null ) ? this : izq.darMenor( );
+    }
+      
+  public Contacto eliminar(String unNombre) {
+    if (this == null) {
+        return null; // Nodo no encontrado, no hay nada que eliminar
+    }
+    if (nombre.compareToIgnoreCase(unNombre) == 0) {
+        if (izq == null) {
+            return der;
+        }
+        if (der == null) {
+            return izq;
+        }
+        Contacto sucesor = der.darMenor();
+        der = der.eliminar(sucesor.getNombre());
+        sucesor.izq = izq;
+        sucesor.der = der;
+        return sucesor;
+    } else if (nombre.compareToIgnoreCase(unNombre) > 0) {
+        izq = izq.eliminar(unNombre);
+    } else {
+        der = der.eliminar(unNombre);
+    }
+    return this;
+}
+
 }

@@ -125,6 +125,33 @@
              </div> 
          </div> 
      </div>
+             
+             
+                             <!-- Modal de confirmacion de la accion eliminar  -->           
+<div class="modal fade" id="eliminarTareaModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="eliminarLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="eliminarLabel">Eliminar Contacto</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h4>¿Estás seguro de que deseas eliminar este contacto?</h4>
+                <p id="contactoNombre"></p>
+                <form id="eliminarForm" action="SvEliminar" method="GET">
+                    <input type="hidden" id="inputEliminar" name="inputEliminar">
+                </form>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" onclick="eliminarContacto()">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+       
         
         <!-- Footer-->
         <footer class="border-top">
@@ -167,7 +194,7 @@
             // funcion para mostrar los datos en la ventana modal
   $('#exampleModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget); // BotÃ³n que desencadenÃ³ el evento
-    var titulo = button.data('id'); // ObtÃ©n el nombre del contacto
+    var titulo = button.data('nombre'); // ObtÃ©n el nombre del contacto
 
     // Realiza una solicitud AJAX al servlet para obtener los detalles del perro por su nombre
     $.ajax({
@@ -179,10 +206,28 @@
       },
       error: function () {
         // Maneja errores aquÃ­ si es necesario y se imprime en consola
-        console.log('Error al cargar los detalles del libro.');
+        console.log('Error al cargar los detalles del contacto.');
       }
     });
   });
+        </script>
+        
+        <script>
+   $('#eliminarTareaModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget); // Botón que desencadenó el evento
+    var nombreContacto = button.data('nombre'); // Obtén el nombre del contacto
+
+    // Mostrar el nombre del contacto en el párrafo dentro del modal de eliminación
+    $('#contactoNombre').text('Nombre del contacto: ' + nombreContacto);
+
+    // Establecer el valor del campo oculto con el nombre del contacto
+    $('#inputEliminar').val(nombreContacto);
+});
+
+function eliminarContacto() {
+    $('#eliminarForm').submit(); // Enviar el formulario al servlet
+}
+
         </script>
     </body>
 </html>

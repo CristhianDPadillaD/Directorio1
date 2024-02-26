@@ -5,4 +5,5 @@ com\mycompany\directorio\Directorio.class
 com\mycompany\directorio\JakartaRestConfiguration.class
 Servlets\SvMostrar.class
 Servlets\SvBuscar.class
+Servlets\SvEliminar.class
 Servlets\SvContacto.class

@@ -58,7 +58,11 @@ public class Directorio implements Serializable{
         
     }
     
-   
+    public void eliminarContacto( String nombre )
+    {
+        contactoRaiz = contactoRaiz.eliminar( nombre );
+     
+    }
     
       public static void escribirContacto(Directorio contactos, ServletContext context) throws FileNotFoundException, IOException {
 
@@ -141,8 +145,8 @@ private void generarTablaRecursivo(Contacto actual, StringBuilder tablaHTML) {
         tablaHTML.append("<tr>");
         tablaHTML.append("<td>").append(actual.getId()).append("</td>");
         tablaHTML.append("<td>").append(actual.getNombre()).append("</td>");
-        tablaHTML.append("<td><a href=\"#\" type=\"button\" class=\"btn btn-outline-danger\" data-bs-toggle=\"modal\" data-bs-target=\"#exampleModal\" data-id=\"" + actual.getNombre() + "\"><i class=\"fa-solid fa-eye\"></i></a>");
-        tablaHTML.append("<form action=\"SvEliminar\" method=\"GET\" ><input type=\"text\" name=\"inputEliminar\" value=\"" + actual.getId() + "\" hidden><button type=\"submit\" class=\"btn btn-outline-danger\"><i class=\"fa-solid fa-trash\"></i></button></form></td>");
+        tablaHTML.append("<td><a href=\"#\" type=\"button\" class=\"btn btn-outline-danger\" data-bs-toggle=\"modal\" data-bs-target=\"#exampleModal\" data-nombre=\"" + actual.getNombre() + "\"><i class=\"fa-solid fa-eye\"></i></a>");
+       tablaHTML.append("<td><a href=\"#\" type=\"button\" class=\"btn btn-outline-danger\" data-bs-toggle=\"modal\" data-bs-target=\"#eliminarTareaModal\" data-nombre=\"" + actual.getNombre()+ "\"><i class=\"fa-solid fa-trash\"></i></a>");
         tablaHTML.append("</tr>");
 
         generarTablaRecursivo(actual.getDer(), tablaHTML);
@@ -166,8 +170,9 @@ private void generarTablaRecursivaBusqueda(Contacto actual, StringBuilder tablaH
             tablaHTML.append("<tr>");
             tablaHTML.append("<td>").append(actual.getId()).append("</td>");
             tablaHTML.append("<td>").append(actual.getNombre()).append("</td>");
-            tablaHTML.append("<td><a href=\"#\" type=\"button\" class=\"btn btn-outline-danger\" data-bs-toggle=\"modal\" data-bs-target=\"#exampleModal\" data-titulo=\"" + actual.getId() + "\"><i class=\"fa-solid fa-eye\"></i></a>");
-            tablaHTML.append("<form action=\"SvEliminar\" method=\"GET\" ><input type=\"text\" name=\"inputEliminar\" value=\"" + actual.getId() + "\" hidden><button type=\"submit\" class=\"btn btn-outline-danger\"><i class=\"fa-solid fa-trash\"></i></button></form></td>");
+             tablaHTML.append("<td><a href=\"#\" type=\"button\" class=\"btn btn-outline-danger\" data-bs-toggle=\"modal\" data-bs-target=\"#exampleModal\" data-nombre=\"" + actual.getNombre() + "\"><i class=\"fa-solid fa-eye\"></i></a>");
+             tablaHTML.append("<td><a href=\"#\" type=\"button\" class=\"btn btn-outline-danger\" data-bs-toggle=\"modal\" data-bs-target=\"#eliminarTareaModal\" data-nombre=\"" + actual.getNombre()+ "\"><i class=\"fa-solid fa-trash\"></i></a>");
+//            tablaHTML.append("<form action=\"SvEliminar\" method=\"GET\" ><input type=\"text\" name=\"inputEliminar\" value=\"" + actual.getId() + "\" hidden><button type=\"submit\" class=\"btn btn-outline-danger\"><i class=\"fa-solid fa-trash\"></i></button></form></td>");
             tablaHTML.append("</tr>");
         }
         
@@ -183,11 +188,6 @@ private void generarTablaRecursivaBusqueda(Contacto actual, StringBuilder tablaH
 
 
 
-/**
- * 
- * @param nombre
- * @return 
- */
     public Contacto buscarContacto( String nombre )
     {
         return contactoRaiz == null ? null : contactoRaiz.buscarIterativo(nombre );
