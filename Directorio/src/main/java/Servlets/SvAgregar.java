@@ -9,6 +9,8 @@ import com.mycompany.directorio.Directorio;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 public class SvAgregar extends HttpServlet {
     
     Directorio agregarDirect = new Directorio();
-    int identificador = 1;
+  
   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -47,21 +49,26 @@ public class SvAgregar extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+          int  identificador = Directorio.cargarUltimoIdentificador(getServletContext());
         String nombre = request.getParameter("nombre");
         String apellido = request.getParameter("apellido");
         String correo = request.getParameter("correo");
         String direccion = request.getParameter("direccion");
-        String celular = request.getParameter("celular");
+        String celular = request.getParameter("telefono");
         
-        agregarDirect=Directorio.cargarContacto(request.getServletContext());
+        try {
+            agregarDirect=Directorio.cargarContacto(request.getServletContext());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SvAgregar.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-        agregarDirect.agregarContacto(identificador , nombre, apellido, correo, direccion, celular);
-        identificador++;
-        
-        Directorio.escribirContacto(request.getServletContext(), agregarDirect);
+        agregarDirect.agregarContacto(identificador, nombre, apellido, correo, direccion, celular);
+       identificador++;
+        Directorio.escribirUltimoIdentificador(identificador, getServletContext());
+        Directorio.escribirContacto(agregarDirect, request.getServletContext());
        
          response.sendRedirect("index.jsp");
+         System.out.println(celular);
     }
 
     

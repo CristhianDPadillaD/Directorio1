@@ -10,11 +10,10 @@
     tabla = Directorio.cargarContacto(context);
     
 
-
-    boolean contactoEncontrado = tabla.verificarExistencia(terminoBusqueda, request);
-    boolean contactosExiste = tabla.verificar();
+    //boolean contactosExiste = tabla.verificar();
+    //boolean contactoEncontrado = tabla.verificarExistencia(terminoBusqueda, request, context);
     String tablaHtml = Directorio.listarContactos(context, request, terminoBusqueda);
-  
+  System.out.println(tabla);
     %>
 
 
@@ -24,7 +23,7 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="index.html">Contactos</a>
+                <a class="navbar-brand" href="index.jsp">Contactos</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars"></i>
@@ -72,22 +71,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                               <% if (!contactosExiste) { %>
-                               
-                             <tr>
-                            <td colspan='6' align='center' valign='middle'>No se han registrado Contactos</td>
-                             </tr>
-                               
-                                <%   
-                                    }else if (contactoEncontrado){ 
-                                %>
-
-                        <tr>
-                            <td colspan='6' align='center' valign='middle'>No existe el contacto</td>
-                            </tr>
-
-                            <% }
-                                    %>
+                                
                                 <%=tablaHtml%>
                             </tbody>
                         </table>
@@ -119,6 +103,29 @@
                 </div>
             </div>
         </div>
+        
+             <!-- modal donde se muestran los  contactos -->
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> 
+         <div class="modal-dialog"> 
+             <div class="modal-content"> 
+                 <div class="modal-header"> 
+                    <h5 class="modal-title" id="exampleModalLabel">Detalles del Contacto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> 
+                 </div>
+                 <div class="modal-body"> 
+                  
+                     <div id="contacto-details"> 
+                         <!-- Aquí se añade los detalles del perro-->
+                </div>
+                 </div> 
+                 <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button> 
+                </div>
+             </div> 
+         </div> 
+     </div>
+        
         <!-- Footer-->
         <footer class="border-top">
             <div class="container px-4 px-lg-5">
@@ -152,6 +159,31 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        
+        <script>
+            
+            // funcion para mostrar los datos en la ventana modal
+  $('#exampleModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget); // Botón que desencadenó el evento
+    var titulo = button.data('id'); // Obtén el nombre del contacto
+
+    // Realiza una solicitud AJAX al servlet para obtener los detalles del perro por su nombre
+    $.ajax({
+      url: 'SvMostrar?id=' + titulo, // Cambia 'id' por el nombre del parámetro que esperas en tu servlet
+      method: 'GET',
+      success: function (data) {
+        // Actualiza el contenido del modal con los detalles del perro
+        $('#contacto-details').html(data);
+      },
+      error: function () {
+        // Maneja errores aquí si es necesario y se imprime en consola
+        console.log('Error al cargar los detalles del libro.');
+      }
+    });
+  });
+        </script>
     </body>
 </html>
 

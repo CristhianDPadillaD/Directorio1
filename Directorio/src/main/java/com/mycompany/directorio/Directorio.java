@@ -4,6 +4,7 @@
  */
 package com.mycompany.directorio;
 import com.mycompany.directorio.Contacto;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -57,67 +58,49 @@ public class Directorio implements Serializable{
         
     }
     
-    //insertar, buscar, listar, eliminar
+   
     
-/**
- * 
- * @param contexto
- * @param contactico 
- */
-    public static void escribirContacto(ServletContext contexto, Directorio contactico) {
-         String path= contexto.getRealPath("archivito.txt");
-         File arc= new File (path);
-        try {
-           
-            FileOutputStream fw = new FileOutputStream(path);
-            ObjectOutputStream pw =new ObjectOutputStream(fw);
-            pw.writeObject(contactico);
-            pw.close();
-            System.out.println("se cargo exitosamente" + path);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("ha ocurrido un error" + e.getMessage());
-        }
-    }
-    
-    
-    /**
-     * 
-     * @param contexto
-     * @return 
-     */
-     public static Directorio cargarContacto(ServletContext contexto)throws FileNotFoundException, IOException  {
-        
-      Directorio contactico = new Directorio();
-      
-        String p="archivito.txt";
-        String path= contexto.getRealPath(p);
-        File arc= new File (path);
-        System.out.println("El archivo serializado se encuentra en: "+path);
-         try {
-               FileInputStream fileIn=new FileInputStream(path);
-               ObjectInputStream ois=new ObjectInputStream(fileIn);
-             
-            
-            contactico = (Directorio) ois.readObject();
-             ois.close();
-             System.out.println("Se leyo -----");
-             System.out.println("buscando en: " + path);
-         }catch (FileNotFoundException ex) {
-                
-                System.out.println("No se encontró el archivo");
-            } catch (IOException ex) {
-                
-                System.out.println("Error al leer el archivo");
-            } catch (ClassNotFoundException ex) {
-                
-                System.out.println("Clase no encontrada al deserializar");
+      public static void escribirContacto(Directorio contactos, ServletContext context) throws FileNotFoundException, IOException {
+
+            String rutaRelativa = "/data/contactosAgregados.ser";
+            String rutaAbsoluta = context.getRealPath(rutaRelativa);
+            File archivo = new File(rutaAbsoluta);
+
+                try (FileOutputStream fos = new FileOutputStream(archivo); ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+
+
+
+                oos.writeObject(contactos);
+            } catch (IOException e) {
+                System.out.println("Error al escribir");
             }
-            
-       return contactico;
+        }
+    
+ 
+     
+        public static Directorio cargarContacto(ServletContext context) throws IOException, ClassNotFoundException {
+           
+        Directorio contactos = new Directorio();
+        
+        String rutaRelativa = "/data/contactosAgregados.ser";
+        String rutaAbsoluta = context.getRealPath(rutaRelativa);
+        File archivo = new File(rutaAbsoluta);
+        
+        if (archivo.exists() && archivo.isFile()) {
+            try (FileInputStream fis = new FileInputStream(archivo); ObjectInputStream ois = new ObjectInputStream(fis)) {
+
+                contactos = (Directorio) ois.readObject();
+            } catch (EOFException e) {
+                System.out.println("El archivo está vacío");
+            } catch (IOException e) {
+                System.out.println("Error al leer el archivo"); 
+            }
+        } else {    
+            System.out.println("El archivo no existe");
+        }
+
+        return contactos;
     }
-     
-     
      
      
           public static String listarContactos (ServletContext context, HttpServletRequest request, String terminoBusqueda) throws IOException, ClassNotFoundException{
@@ -158,7 +141,7 @@ private void generarTablaRecursivo(Contacto actual, StringBuilder tablaHTML) {
         tablaHTML.append("<tr>");
         tablaHTML.append("<td>").append(actual.getId()).append("</td>");
         tablaHTML.append("<td>").append(actual.getNombre()).append("</td>");
-        tablaHTML.append("<td><a href=\"#\" type=\"button\" class=\"btn btn-outline-danger\" data-bs-toggle=\"modal\" data-bs-target=\"#exampleModal\" data-titulo=\"" + actual.getId() + "\"><i class=\"fa-solid fa-eye\"></i></a>");
+        tablaHTML.append("<td><a href=\"#\" type=\"button\" class=\"btn btn-outline-danger\" data-bs-toggle=\"modal\" data-bs-target=\"#exampleModal\" data-id=\"" + actual.getNombre() + "\"><i class=\"fa-solid fa-eye\"></i></a>");
         tablaHTML.append("<form action=\"SvEliminar\" method=\"GET\" ><input type=\"text\" name=\"inputEliminar\" value=\"" + actual.getId() + "\" hidden><button type=\"submit\" class=\"btn btn-outline-danger\"><i class=\"fa-solid fa-trash\"></i></button></form></td>");
         tablaHTML.append("</tr>");
 
@@ -174,28 +157,28 @@ private void generarTablaRecursivo(Contacto actual, StringBuilder tablaHTML) {
 }
 
 private void generarTablaRecursivaBusqueda(Contacto actual, StringBuilder tablaHTML, String terminoBusqueda) {
-    if ( actual!= null) {
-        // Recorrido en orden: primero el hijo izquierdo, luego el nodo actual, y finalmente el hijo derecho
-        generarTablaRecursivaBusqueda(actual.getIzq(), tablaHTML, terminoBusqueda);
+    if (actual != null) {
         
-        generarTablaRecursivo(actual.getIzq(), tablaHTML);
         
-        if (actual.getNombre().equalsIgnoreCase(terminoBusqueda)){
-            // Agregar el nodo actual a la tabla HTML
-        tablaHTML.append("<tr>");
-        tablaHTML.append("<td>").append(actual.getId()).append("</td>");
-        tablaHTML.append("<td>").append(actual.getNombre()).append("</td>");
-        tablaHTML.append("<td><a href=\"#\" type=\"button\" class=\"btn btn-outline-danger\" data-bs-toggle=\"modal\" data-bs-target=\"#exampleModal\" data-titulo=\"" + actual.getId() + "\"><i class=\"fa-solid fa-eye\"></i></a>");
-        tablaHTML.append("<form action=\"SvEliminar\" method=\"GET\" ><input type=\"text\" name=\"inputEliminar\" value=\"" + actual.getId() + "\" hidden><button type=\"submit\" class=\"btn btn-outline-danger\"><i class=\"fa-solid fa-trash\"></i></button></form></td>");
-        tablaHTML.append("</tr>");
-
-            
+        // Comparar el nombre del contacto con el término de búsqueda (ignorando mayúsculas y minúsculas)
+        if (actual.getNombre().equalsIgnoreCase(terminoBusqueda)) {
+            // Si hay coincidencia, agregar el nodo actual a la tabla HTML
+            tablaHTML.append("<tr>");
+            tablaHTML.append("<td>").append(actual.getId()).append("</td>");
+            tablaHTML.append("<td>").append(actual.getNombre()).append("</td>");
+            tablaHTML.append("<td><a href=\"#\" type=\"button\" class=\"btn btn-outline-danger\" data-bs-toggle=\"modal\" data-bs-target=\"#exampleModal\" data-titulo=\"" + actual.getId() + "\"><i class=\"fa-solid fa-eye\"></i></a>");
+            tablaHTML.append("<form action=\"SvEliminar\" method=\"GET\" ><input type=\"text\" name=\"inputEliminar\" value=\"" + actual.getId() + "\" hidden><button type=\"submit\" class=\"btn btn-outline-danger\"><i class=\"fa-solid fa-trash\"></i></button></form></td>");
+            tablaHTML.append("</tr>");
         }
         
+        // Recorrer el subárbol izquierdo nuevamente
+        generarTablaRecursivaBusqueda(actual.getIzq(), tablaHTML, terminoBusqueda);  // Este llamado duplicado podría ser el problema
         
-        generarTablaRecursivo(actual.getDer(), tablaHTML);
+        // Recorrer el subárbol derecho
+        generarTablaRecursivaBusqueda(actual.getDer(), tablaHTML, terminoBusqueda);
     }
 }
+
 
 
 
@@ -207,16 +190,58 @@ private void generarTablaRecursivaBusqueda(Contacto actual, StringBuilder tablaH
  */
     public Contacto buscarContacto( String nombre )
     {
-        return contactoRaiz == null ? null : contactoRaiz.buscar( nombre );
+        return contactoRaiz == null ? null : contactoRaiz.buscarIterativo(nombre );
     }
 
     
-    public boolean verificarExistencia (String nombre,HttpServletRequest request ){
-        
-          Contacto contactoEncontrado = buscarContacto(nombre);
-            
-        
-        return contactoEncontrado !=null; 
-        
+    public boolean verificarExistencia (String nombre,HttpServletRequest request,ServletContext context){
+      if (contactoRaiz != null){
+          
+          if (contactoRaiz.buscarIterativo(nombre)!=null){
+              return true;
+              
+          }else{
+              return false;
+          }
+       
+      }else{
+          return false;
+      }
     }
+    
+ public static void escribirUltimoIdentificador(int ultimoIdentificador, ServletContext context) {
+    String rutaRelativa = "/data/ultimoIdentificador.txt";
+    String rutaAbsoluta = context.getRealPath(rutaRelativa);
+    File archivo = new File(rutaAbsoluta);
+
+    try (FileOutputStream fos = new FileOutputStream(archivo);
+            ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+        oos.writeObject(ultimoIdentificador);
+    } catch (IOException e) {
+        System.out.println("Error al escribir el último identificador");
+    }
+}
+
+public static int cargarUltimoIdentificador(ServletContext context) {
+    int ultimoIdentificador = 1; // Valor por defecto
+
+    String rutaRelativa = "/data/ultimoIdentificador.txt";
+    String rutaAbsoluta = context.getRealPath(rutaRelativa);
+    File archivo = new File(rutaAbsoluta);
+
+    if (archivo.exists() && archivo.isFile()) {
+        try (FileInputStream fis = new FileInputStream(archivo);
+                ObjectInputStream ois = new ObjectInputStream(fis)) {
+            ultimoIdentificador = (int) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("Error al cargar el último identificador");
+        }
+    }
+
+    return ultimoIdentificador;
+}
+
+
+
 }
