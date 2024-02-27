@@ -62,12 +62,19 @@ public class SvAgregar extends HttpServlet {
             Logger.getLogger(SvAgregar.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        agregarDirect.agregarContacto(identificador, nombre, apellido, correo, direccion, celular);
+        if (agregarDirect.verificarExistencia(nombre, request)==false){
+             agregarDirect.agregarContacto(identificador, nombre, apellido, correo, direccion, celular);
        identificador++;
         Directorio.escribirUltimoIdentificador(identificador, getServletContext());
         Directorio.escribirContacto(agregarDirect, request.getServletContext());
        
          response.sendRedirect("index.jsp");
+        }
+        else {
+       response.sendRedirect("index.jsp?repetido=true");
+
+        }
+       
          System.out.println(celular);
     }
 

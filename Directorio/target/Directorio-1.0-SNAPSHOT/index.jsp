@@ -7,6 +7,7 @@
     
     ServletContext context = getServletContext();
     String terminoBusqueda = request.getParameter("buscar");
+    String repet= request.getParameter("repetido");
     tabla = Directorio.cargarContacto(context);
     
 
@@ -118,6 +119,23 @@
             </div>
         </div>
         
+<% 
+
+    if (repet != null && repet.equals("true")) {
+%>
+<script>
+    Swal.fire({
+        title: 'Error!',
+        text: 'Contacto ya existente',
+        icon: 'error',
+        confirmButtonText: 'Entendido'
+    });
+</script>
+<% } %>
+
+  
+        
+        
              <!-- modal donde se muestran los  contactos -->
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> 
@@ -130,7 +148,7 @@
                  <div class="modal-body"> 
                   
                      <div id="contacto-details"> 
-                         <!-- Aquí se añade los detalles del perro-->
+                         <!-- Aquí se añade los detalles del contacto-->
                 </div>
                  </div> 
                  <div class="modal-footer">

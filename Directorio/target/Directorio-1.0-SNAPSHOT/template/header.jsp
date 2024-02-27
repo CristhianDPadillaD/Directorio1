@@ -17,4 +17,6 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
          <script src="scripts/script.js" type="text/javascript"></script>
+         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+         <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     </head>
