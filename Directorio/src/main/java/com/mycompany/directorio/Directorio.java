@@ -194,20 +194,25 @@ private void generarTablaRecursivaBusqueda(Contacto actual, StringBuilder tablaH
     }
 
     
-    public boolean verificarExistencia (String nombre,HttpServletRequest request,ServletContext context){
+    public boolean verificarExistencia (String nombre,HttpServletRequest request) {
       if (contactoRaiz != null){
           
-          if (contactoRaiz.buscarIterativo(nombre)!=null){
+          if (nombre != null){
+              if (contactoRaiz.buscarIterativo(nombre)!=null){
               return true;
               
           }else{
               return false;
           }
+          }
+         
        
       }else{
           return false;
       }
+      return false;
     }
+    
     
  public static void escribirUltimoIdentificador(int ultimoIdentificador, ServletContext context) {
     String rutaRelativa = "/data/ultimoIdentificador.txt";

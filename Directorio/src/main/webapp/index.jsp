@@ -10,8 +10,9 @@
     tabla = Directorio.cargarContacto(context);
     
 
-    //boolean contactosExiste = tabla.verificar();
-    //boolean contactoEncontrado = tabla.verificarExistencia(terminoBusqueda, request, context);
+    boolean contactosExiste = tabla.verificar();
+    boolean contactoEncontrado = tabla.verificarExistencia(terminoBusqueda, request);
+    boolean contaEncon = contactoEncontrado;
     String tablaHtml = Directorio.listarContactos(context, request, terminoBusqueda);
   System.out.println(tabla);
     %>
@@ -71,6 +72,19 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <% 
+                                if (!contactosExiste) { %>
+                                 <tr>
+                            <td colspan='6' align='center' valign='middle'>No hay contactos</td>
+                        </tr>
+                                    <% }
+                              else if(!contaEncon && terminoBusqueda!=null){ %>
+                                 <tr>
+                            <td colspan='6' align='center' valign='middle'>Contacto no encontrado </td>
+                                 </tr>
+                                   <% }  
+                                %>
+                                
                                 
                                 <%=tablaHtml%>
                             </tbody>

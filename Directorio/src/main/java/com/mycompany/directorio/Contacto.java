@@ -140,7 +140,7 @@ public class Contacto  implements Comparable<Contacto>, Serializable{
 
 
 
-          public Contacto buscarIterativo( String unNombre )
+          public Contacto buscarIterativo( String unNombre ) 
     {
         Contacto p = this;
         while( p != null )
@@ -156,10 +156,9 @@ public class Contacto  implements Comparable<Contacto>, Serializable{
         return null;
     }
    
-//      public boolean esHoja( )
-//    {
-//        return izq == null && der == null;
-//    }
+
+          
+          
         public Contacto darMenor( )
     {
         return ( izq == null ) ? this : izq.darMenor( );
