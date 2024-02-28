@@ -7,7 +7,6 @@ package Servlets;
 import com.mycompany.directorio.Contacto;
 import com.mycompany.directorio.Directorio;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -18,10 +17,12 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author ADMIN
+ * @author 
  */
 @WebServlet(name = "SvMostrar", urlPatterns = {"/SvMostrar"})
 public class SvMostrar extends HttpServlet {
+    
+    //Se crea un objeto tipo Directorio
 Directorio mostrarContacto = new Directorio();
    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -34,15 +35,19 @@ Directorio mostrarContacto = new Directorio();
     @Override
 protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-    String identificador = request.getParameter("id");
+    
+    //Se obtiene el parametro nombre 
+    String identificador = request.getParameter("nombre").trim();
     System.out.println(identificador);
 
+    // Se carga el archivo en el objeto directorio
     try {
         mostrarContacto = Directorio.cargarContacto(request.getServletContext());
     } catch (ClassNotFoundException ex) {
         Logger.getLogger(SvMostrar.class.getName()).log(Level.SEVERE, null, ex);
     }
 
+    // El tipo contacto se busca y se guarda en una variable
     Contacto muestra = mostrarContacto.buscarContacto(identificador);
 
     response.setContentType("text/html"); // Mover aquí la configuración del tipo de contenido y la codificación de caracteres

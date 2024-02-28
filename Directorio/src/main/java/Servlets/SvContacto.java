@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author cuati
+ * @author 
  */
 @WebServlet(name = "SvContacto", urlPatterns = {"/SvContacto"})
 public class SvContacto extends HttpServlet {
@@ -27,6 +27,8 @@ public class SvContacto extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        //redirecciona al jsp llamado contacto
         response.sendRedirect("contacto.jsp");
     }
 

@@ -16,45 +16,48 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author ADMIN
+ * @author
  */
 @WebServlet(name = "SvEliminar", urlPatterns = {"/SvEliminar"})
 public class SvEliminar extends HttpServlet {
 
-Directorio eliminarContacto = new Directorio ();
+    //Se crea un direcotrio 
+    Directorio eliminarContacto = new Directorio();
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-      
+
     }
 
-  
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-          String contactoEliminar = request.getParameter("inputEliminar");
-          
-    try {
-        eliminarContacto = Directorio.cargarContacto(request.getServletContext());
-    } catch (ClassNotFoundException ex) {
-        Logger.getLogger(SvEliminar.class.getName()).log(Level.SEVERE, null, ex);
-    }
-          eliminarContacto.eliminarContacto(contactoEliminar);
-          
-          eliminarContacto.escribirContacto(eliminarContacto, request.getServletContext());
-          
-            response.sendRedirect("index.jsp");
+        //Se obtiene el parametro enviado desde la modal
+        String contactoEliminar = request.getParameter("inputEliminar");
+
+        //se carga el archivo de persistencia
+        try {
+            eliminarContacto = Directorio.cargarContacto(request.getServletContext());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SvEliminar.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //Se llama a la funcion de eliminar contacto con el parametro recibido del directorio
+        eliminarContacto.eliminarContacto(contactoEliminar);
+
+        //Se escribe el archivo de persistencia con el contacto eliminado
+        eliminarContacto.escribirContacto(eliminarContacto, request.getServletContext());
+
+        //Se reenvia al index 
+        response.sendRedirect("index.jsp");
     }
 
-  
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-   
     @Override
     public String getServletInfo() {
         return "Short description";

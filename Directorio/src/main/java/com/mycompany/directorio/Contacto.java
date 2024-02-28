@@ -202,14 +202,23 @@ public class Contacto implements Comparable<Contacto>, Serializable {
                 return izq;
             }
             Contacto sucesor = der.darMenor();
-            der = der.eliminar(sucesor.getNombre());
+            if(sucesor !=null){
+                der = der.eliminar(sucesor.getNombre());
             sucesor.izq = izq;
             sucesor.der = der;
             return sucesor;
+            }else{
+                return izq;
+            }
+            
         } else if (nombre.compareToIgnoreCase(unNombre) > 0) {
+             if (izq != null) {
             izq = izq.eliminar(unNombre);
+        }
         } else {
+             if (der != null) {
             der = der.eliminar(unNombre);
+        }
         }
         return this;
     }

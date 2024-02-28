@@ -63,7 +63,7 @@
                     <hr class="my-4" />
                     <!-- Post preview-->
                     <div class="post-preview">
-                        <a><h2 class="post-title">Visualiza tus contactos</h2></a>
+                        <a><h2 class="post-title">Visualiza tus contactos INORDEN</h2></a>
                         <table class="table">
                             <thead>
                                 <tr>
@@ -230,7 +230,7 @@
 
     // Realiza una solicitud AJAX al servlet para obtener los detalles del perro por su nombre
     $.ajax({
-      url: 'SvMostrar?id=' + titulo, // Cambia 'id' por el nombre del parámetro que esperas en tu servlet
+      url: 'SvMostrar?nombre=' + titulo, // Cambia 'id' por el nombre del parámetro que esperas en tu servlet
       method: 'GET',
       success: function (data) {
         // Actualiza el contenido del modal con los detalles del perro

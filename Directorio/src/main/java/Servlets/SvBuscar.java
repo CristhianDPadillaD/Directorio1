@@ -13,27 +13,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * 
- * @author ADMIN
+ *
+ * @author
  */
 @WebServlet(name = "SvBuscar", urlPatterns = {"/SvBuscar"})
 public class SvBuscar extends HttpServlet {
 
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-    
+
     }
 
-  
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-           String terminoBusqueda = request.getParameter("contact"); //Se obtiene el usuario 
+        String terminoBusqueda = request.getParameter("contact"); //Se obtiene el usuario 
+        
         //Redirigimos con la variable para que cambie la tabla
-       
-        response.sendRedirect("index.jsp?buscar="+terminoBusqueda);
+        response.sendRedirect("index.jsp?buscar=" + terminoBusqueda);
 
     }
 
